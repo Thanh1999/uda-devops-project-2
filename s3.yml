@@ -1,0 +1,27 @@
+Resources:
+  S3Bucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Sub "udacity-s3-005624357837"
+      PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+      OwnershipControls:
+        Rules:
+          - ObjectOwnership: ObjectWriter
+      VersioningConfiguration:
+        Status: Enabled
+      LifecycleConfiguration:
+        Rules:
+          - Status: "Enabled"
+            NoncurrentVersionExpirationInDays: 10
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+Outputs:
+  S3BucketPath:
+    Description: Path to the S3
+    Value: !GetAtt S3Bucket.Arn
+    Export:
+      Name: !Sub S3BucketARN
